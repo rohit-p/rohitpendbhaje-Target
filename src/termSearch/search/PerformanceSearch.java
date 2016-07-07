@@ -12,6 +12,7 @@ import java.util.Scanner;
  */
 public class PerformanceSearch {
 
+	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 
 		Scanner scanner1 = null;
@@ -22,13 +23,22 @@ public class PerformanceSearch {
 
 			System.out.println("Search Method:1) String Match 2) Regular Expression 3) Indexed");
 			scanner2 = new Scanner(System.in);
-
 			int number = scanner2.nextInt();
 			
 			SearchMethodFactory searchMethodFactory = new SearchMethodFactory();
-			
 			// factory method to return appropriate search method
 			IMethodReader methodReader = searchMethodFactory.getSearchMethod(number);
+			
+			if(methodReader == null)
+			{
+				System.out.println("Please enter option 1 or option 2 or option 3");
+				System.out.println("Search Method:1) String Match 2) Regular Expression 3) Indexed");
+				scanner2 = new Scanner(System.in);
+				number = scanner2.nextInt();
+				
+				searchMethodFactory = new SearchMethodFactory();
+				methodReader = searchMethodFactory.getSearchMethod(number);
+			}
 
 			long start  = System.currentTimeMillis();
 			
@@ -59,14 +69,6 @@ public class PerformanceSearch {
 		catch(InputMismatchException e){
 			System.out.println("Please enter correct option");
 		}
-
-		finally{
-
-			scanner1.close();
-			scanner2.close();
-
-		}
-
 
 	}	
 }
